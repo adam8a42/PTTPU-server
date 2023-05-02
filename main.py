@@ -20,12 +20,13 @@ def PTTP_operation(PORT):
                     print(path)
                     if os.path.isfile(path):
                         with open(path, encoding=ENCODING) as file:
-                            data = file.read()
+                            data = file.read() + "<<PTTP END>>"
                             conn.sendall(data.encode(ENCODING))
                     elif os.path.isdir(path):
                         ls = ""
                         for line in os.listdir(path):
                             ls += f"{line}\n"
+                        ls += "<<PTTP END>>"
                         conn.sendall(ls.encode(ENCODING))
                     else:
                         conn.sendall(b"ERROR1")
@@ -46,12 +47,13 @@ def PTTPU_operation(PORT):
                     print(path)
                     if os.path.isfile(path):
                         with open(path, encoding=ENCODING) as file:
-                            data = file.read()
+                            data = file.read() + "<<PTTP END>>"
                             conn.sendall(base64.encodebytes(data.encode(ENCODING)))
                     elif os.path.isdir(path):
                         ls = ""
                         for line in os.listdir(path):
                             ls += f"{line}\n"
+                        ls += "<<PTTP END>>"
                         conn.sendall(base64.encodebytes(ls.encode(ENCODING)))
                     else:
                         conn.sendall(base64.encodebytes(b"ERROR1"))
