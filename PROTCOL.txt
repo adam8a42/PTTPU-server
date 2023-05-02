@@ -1,0 +1,5 @@
+Client: GET PATH
+Server: LIST OR File
+nie można wysłać żądania jeśli nie było odpowiedzi
+42750 - PTTP
+42751 - PTTPU
