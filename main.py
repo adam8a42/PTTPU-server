@@ -22,21 +22,17 @@ def PTTP_operation(PORT):
                         with open(path, encoding=ENCODING) as file:
                             data = file.read() + "<<PTTP END>>"
                             conn.sendall(data.encode(ENCODING))
-                            conn.close()
                     elif os.path.isdir(path):
                         ls = ""
                         for line in os.listdir(path):
                             ls += f"{line}\n"
                         ls += "<<PTTP END>>"
                         conn.sendall(ls.encode(ENCODING))
-                        conn.close()
 
                     else:
                         conn.sendall(b"ERROR1")
-                        conn.close()
                 else:
                     conn.sendall(b"ERROR2")
-                    conn.close()
 def PTTPU_operation(PORT):
     ENCODING = "ascii"
     while True:
@@ -54,20 +50,16 @@ def PTTPU_operation(PORT):
                         with open(path, encoding=ENCODING) as file:
                             data = file.read() + "<<PTTP END>>"
                             conn.sendall(base64.encodebytes(data.encode(ENCODING)))
-                            conn.close()
                     elif os.path.isdir(path):
                         ls = ""
                         for line in os.listdir(path):
                             ls += f"{line}\n"
                         ls += "<<PTTP END>>"
                         conn.sendall(base64.encodebytes(ls.encode(ENCODING)))
-                        conn.close()
                     else:
                         conn.sendall(base64.encodebytes(b"ERROR1"))
-                        conn.close()
                 else:
                     conn.sendall(base64.encodebytes(b"ERROR2"))
-                    conn.close()
                 
 
 
