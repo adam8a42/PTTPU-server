@@ -23,7 +23,7 @@ def PTTP_operation(PORT):
                         with open(path, encoding=ENCODING) as file:
                             data = file.read() + "<<PTTP END>>"
                             conn.sendall(data.encode(ENCODING))
-                            while(conn.recv() is not ""):
+                            while(conn.recv(1024) != ""):
                                 time.sleep(10)
                             conn.close()
                     elif os.path.isdir(path):
@@ -32,19 +32,19 @@ def PTTP_operation(PORT):
                             ls += f"{line}\n"
                         ls += "<<PTTP END>>"
                         conn.sendall(ls.encode(ENCODING))
-                        while(conn.recv() is not ""):
+                        while(conn.recv(1024) != ""):
                             time.sleep(10)
                         conn.close()
 
                     else:
 
                         conn.sendall(b"ERROR1")
-                        while(conn.recv() is not ""):
+                        while(conn.recv(1024) != ""):
                             time.sleep(10)
                         conn.close()
                 else:
                     conn.sendall(b"ERROR2")
-                    while(conn.recv() is not ""):
+                    while(conn.recv(1024) != ""):
                             time.sleep(10)
                     conn.close()
 def PTTPU_operation(PORT):
@@ -64,7 +64,7 @@ def PTTPU_operation(PORT):
                         with open(path, encoding=ENCODING) as file:
                             data = file.read() + "<<PTTP END>>"
                             conn.sendall(base64.encodebytes(data.encode(ENCODING)))
-                            while(conn.recv() is not ""):
+                            while(conn.recv(1024) != ""):
                                 time.sleep(10)
                             conn.close()
                     elif os.path.isdir(path):
@@ -73,17 +73,17 @@ def PTTPU_operation(PORT):
                             ls += f"{line}\n"
                         ls += "<<PTTP END>>"
                         conn.sendall(base64.encodebytes(ls.encode(ENCODING)))
-                        while(conn.recv() is not ""):
+                        while(conn.recv(1024) != ""):
                             time.sleep(10)
                         conn.close()
                     else:
                         conn.sendall(base64.encodebytes(b"ERROR1"))
-                        while(conn.recv() is not ""):
+                        while(conn.recv(1024) != ""):
                             time.sleep(10)
                         conn.close()
                 else:
                     conn.sendall(base64.encodebytes(b"ERROR2"))
-                    while(conn.recv() is not ""):
+                    while(conn.recv(1024) != ""):
                             time.sleep(10)
                     conn.close()
                 
