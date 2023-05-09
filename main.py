@@ -23,8 +23,8 @@ def PTTP_operation(PORT):
                         with open(path, encoding=ENCODING) as file:
                             data = file.read() + "<<PTTP END>>"
                             conn.sendall(data.encode(ENCODING))
-                            while(conn.recv(1024) != ""):
-                                time.sleep(10)
+                            while(conn.recv(1024)):
+                                time.sleep(0.01)
                             conn.close()
                     elif os.path.isdir(path):
                         ls = ""
@@ -32,20 +32,20 @@ def PTTP_operation(PORT):
                             ls += f"{line}\n"
                         ls += "<<PTTP END>>"
                         conn.sendall(ls.encode(ENCODING))
-                        while(conn.recv(1024) != ""):
-                            time.sleep(10)
+                        while(conn.recv(1024)):
+                            time.sleep(0.01)
                         conn.close()
 
                     else:
 
-                        conn.sendall(b"ERROR1")
-                        while(conn.recv(1024) != ""):
-                            time.sleep(10)
+                        conn.sendall(b"ERROR2: File/directory does not exist")
+                        while(conn.recv(1024)):
+                            time.sleep(0.01)
                         conn.close()
                 else:
-                    conn.sendall(b"ERROR2")
-                    while(conn.recv(1024) != ""):
-                            time.sleep(10)
+                    conn.sendall(b"ERROR1: Wrong command")
+                    while(conn.recv(1024)):
+                            time.sleep(0.01)
                     conn.close()
 def PTTPU_operation(PORT):
     ENCODING = "ascii"
@@ -64,8 +64,8 @@ def PTTPU_operation(PORT):
                         with open(path, encoding=ENCODING) as file:
                             data = file.read() + "<<PTTP END>>"
                             conn.sendall(base64.encodebytes(data.encode(ENCODING)))
-                            while(conn.recv(1024) != ""):
-                                time.sleep(10)
+                            while(conn.recv(1024)):
+                                time.sleep(0.01)
                             conn.close()
                     elif os.path.isdir(path):
                         ls = ""
@@ -73,18 +73,18 @@ def PTTPU_operation(PORT):
                             ls += f"{line}\n"
                         ls += "<<PTTP END>>"
                         conn.sendall(base64.encodebytes(ls.encode(ENCODING)))
-                        while(conn.recv(1024) != ""):
-                            time.sleep(10)
+                        while(conn.recv(1024)):
+                            time.sleep(0.01)
                         conn.close()
                     else:
-                        conn.sendall(base64.encodebytes(b"ERROR1"))
-                        while(conn.recv(1024) != ""):
-                            time.sleep(10)
+                        conn.sendall(base64.encodebytes(b"ERROR2: File/directory does not exist"))
+                        while(conn.recv(1024)):
+                            time.sleep(0.01)
                         conn.close()
                 else:
-                    conn.sendall(base64.encodebytes(b"ERROR2"))
-                    while(conn.recv(1024) != ""):
-                            time.sleep(10)
+                    conn.sendall(base64.encodebytes(b"ERROR1: Wrong command"))
+                    while(conn.recv(1024)):
+                            time.sleep(0.01)
                     conn.close()
                 
 
