@@ -16,14 +16,13 @@ def PTTP_operation(PORT):
             connection_socket, address = s.accept()
             with connection_socket as conn:
                 input = (conn.recv(1024).decode(ENCODING)).split()
-                #Checking the command
+                #Checking the command, if less than three terms - default directory
                 if len(input) != 3:
                     path = DIR
 
                 elif input[0] == "GET" and input[2] == "PTTP/1.0":
                     input = input[1] 
                     path = DIR + input
-                    print("path = ")
 
                 else: #incorrect command
                     conn.sendall(b"ERROR1: Wrong command")
@@ -35,7 +34,6 @@ def PTTP_operation(PORT):
                 if os.path.isfile(path):
                     with open(path, encoding=ENCODING) as file:
                         data = file.read() + "<<PTTP END>>"
-                        print(data.encode(ENCODING))
                         conn.sendall(data.encode(ENCODING))
                         while(conn.recv(1024)):
                             time.sleep(0.01)
@@ -71,7 +69,6 @@ def PTTPU_operation(PORT):
                 elif input[0] == "GET" and input[2] == "PTTP/1.0":
                     input = input[1]
                     path = DIR + input
-                    print(path)
 
                 else:
                     conn.sendall(base64.encodebytes(b"ERROR1: Wrong command"))
