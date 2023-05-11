@@ -23,7 +23,7 @@ def PTTP_operation(PORT):
                 elif input[0] == "GET" and input[2] == "PTTP/1.0":
                     input = input[1] 
                     path = DIR + input
-                    print(path)
+                    print("path = ")
 
                 else: #incorrect command
                     conn.sendall(b"ERROR1: Wrong command")
@@ -46,7 +46,6 @@ def PTTP_operation(PORT):
                     for line in os.listdir(path):
                         ls += f"{line}\n"
                     ls += "<<PTTP END>>"
-                    print(ls.encode(ENCODING))
                     conn.sendall(ls.encode(ENCODING))
                     while(conn.recv(1024)):
                         time.sleep(0.01)
