@@ -29,9 +29,13 @@ def PTTP_operation(PORT):
                     while(conn.recv(1024)):
                             time.sleep(0.01)
                     conn.close()
-
                 #checking files
-                if os.path.isfile(path):
+                if path.find("..") != -1:
+                    conn.sendall(b"ERROR3: Use of symbol .. is not allowed")
+                    while(conn.recv(1024)):
+                        time.sleep(0.01)
+                    conn.close()
+                elif os.path.isfile(path):
                     with open(path, encoding=ENCODING) as file:
                         data = file.read() + "<<PTTP END>>"
                         conn.sendall(data.encode(ENCODING))
@@ -76,7 +80,12 @@ def PTTPU_operation(PORT):
                             time.sleep(0.01)
                     conn.close()
 
-                if os.path.isfile(path):
+                if path.find("..") != -1:
+                    conn.sendall(b"ERROR3: Use of symbol .. is not allowed")
+                    while(conn.recv(1024)):
+                        time.sleep(0.01)
+                    conn.close()
+                elif os.path.isfile(path):
                     with open(path, encoding=ENCODING) as file:
                         data = file.read() + "<<PTTP END>>"
                         conn.sendall(base64.encodebytes(data.encode(ENCODING)))
